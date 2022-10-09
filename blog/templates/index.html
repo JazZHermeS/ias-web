@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h2> Welcome to the Blogging Website!!</h2>
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+{% else %}
+  <p>You are not logged in</p>
+  <a href="accounts/login">
+    <button class="btn btn-primary"> Log In</button>
+  </a>
+{% endif %}
+{% endblock %}
