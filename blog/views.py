@@ -25,11 +25,11 @@ def register_request(request):
 			return redirect("main:homepage")
 		messages.error(request, "Unsuccessful registration. Invalid information.")
 	form = NewUserForm()
-	return render (request=request, template_name="registration/register.html", context={"register_form":form})
+	return render(request=request, template_name="registration/register.html", context={"register_form":form})
 
-def main(request):
+def home(request):
 	template = loader.get_template("main_page.html")
-	return HttpResponse(template.render())
+	return render(request, "blog/main_page.html", {})
 
 def new_story(request):
 	template = loader.get_template("new_story.html")
