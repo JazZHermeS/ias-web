@@ -3,10 +3,11 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm
+from .models import ToDoList, Item
 
-def index(request):
-	template = loader.get_template('index.html')
-	return HttpResponse(template.render())
+def index(request, name):
+	ls = ToDoList.objects.get(name=name) #template = loader.get_template('index.html')
+	return HttpResponse("<h1>%s</h1>"%ls.name) #(template.render())
 
 def log_in(request):
 	template = loader.get_template('registration/login.html')
