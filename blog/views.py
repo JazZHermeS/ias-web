@@ -25,7 +25,7 @@ def register_request(request):
 			#messages.success(request, "Registration successful." )
 			#return render(request, "blog/main_page.html", {})
 			#messages.error(request, "Unsuccessful registration. Invalid information.")
-		return render(request, "blog/main_page.html", {}) #return redirect("registration//login")
+		return redirect("/")
 	else:
 		form = NewUserForm()
 	return render(request, "register/register.html",{"form": form})
