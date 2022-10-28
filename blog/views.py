@@ -29,8 +29,6 @@ def log_in(request):
 		return render(request, 'register/login.html', {})
 
 def register_request(request):
-	#template = loader.get_template('registration/register.html')
-	#return HttpResponse(template.render())	
 	if request.method == "POST":
 		form = NewUserForm(request.POST)
 		if form.is_valid():
@@ -41,7 +39,7 @@ def register_request(request):
 			login(request, user)
 			messages.success(request, "Registration successful." )
 			#return render(request, "blog/main_page.html", {})
-		return redirect("/")
+			return redirect("/")
 	else:
 		form = NewUserForm()
 		messages.error(request, "Unsuccessful registration. Invalid information.")
