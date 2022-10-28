@@ -3,14 +3,15 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm
-from .models import ToDoList, Item
+#from .models import ToDoList, Item
+from .models import story
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 
 def profile(request, id):
-	ls = ToDoList.objects.get(id=id) 
+	#ls = ToDoList.objects.get(id=id) 
 	return HttpResponse("<h1>%s</h1>"%id)
 
 def log_in(request):
@@ -48,8 +49,9 @@ def register_request(request):
 
 def home(request):
 	request.user
+	story_list = story.objects.all()
 	template = loader.get_template("main_page.html")
-	return render(request, "blog/main_page.html", {})
+	return render(request, "blog/main_page.html", {'story_list':story_list})
 
 def new_story(request):
 	request.user

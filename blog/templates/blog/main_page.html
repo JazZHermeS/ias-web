@@ -31,6 +31,9 @@
                 </button>
             </a>
         </div>
+        {% for story in story_list %}
+		{{story}}
+	{% endfor %}
         <article class="story" style="padding: 20px;">
             <div class="story" style="border: 1px solid black;">
                 <h2>Story</h2>
