@@ -27,45 +27,22 @@
         <div style="align-content: center; text-align: center;">
             <a href="new_story">
                 <button style="width: 50%;">
-                    +
                 </button>
             </a>
         </div>
         {% for story in story_list %}
-		{{story}}
+		<article class="story" style="padding: 20px;">
+		    <div class="story" style="border: 1px solid black;">
+		        <h2>{{story}}</h2>
+		        <p> 
+		            {{story.text}}
+		        </p>
+		    </div>
+		</article>
+        	
+        	<br>
+		
 	{% endfor %}
-        <article class="story" style="padding: 20px;">
-            <div class="story" style="border: 1px solid black;">
-                <h2>Story</h2>
-                <p> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nemo, excepturi dolorum libero tenetur dignissimos voluptate laudantium optio laborum! Tenetur, fuga eum delectus ex neque earum. Ad repudiandae doloribus magni?
-                </p>
-            </div>
-        </article>
-        <article class="story" style="padding: 20px;">
-            <div class="story" style="border: 1px solid black;">
-                <h2>Story</h2>
-                <p> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nemo, excepturi dolorum libero tenetur dignissimos voluptate laudantium optio laborum! Tenetur, fuga eum delectus ex neque earum. Ad repudiandae doloribus magni?
-                </p>
-            </div>
-        </article>
-        <article class="story" style="padding: 20px;">
-            <div class="story" style="border: 1px solid black;">
-                <h2>Story</h2>
-                <p> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nemo, excepturi dolorum libero tenetur dignissimos voluptate laudantium optio laborum! Tenetur, fuga eum delectus ex neque earum. Ad repudiandae doloribus magni?
-                </p>
-            </div>
-        </article>
-        <article class="story" style="padding: 20px;">
-            <div class="story" style="border: 1px solid black;">
-                <h2>Story</h2>
-                <p> 
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat nemo, excepturi dolorum libero tenetur dignissimos voluptate laudantium optio laborum! Tenetur, fuga eum delectus ex neque earum. Ad repudiandae doloribus magni?
-                </p>
-            </div>
-        </article>
     </section>
     <footer style="position: absolute; bottom: 10px; width: 100%;">
         <hr>
