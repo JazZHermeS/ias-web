@@ -9,13 +9,27 @@
             <h1>Story Time (logo)</h1>
         </header>
         <div class="topbuttons" style="float:right;">
-            <a href="profile">
+            {% if user.is_authenticated %}
+            <a href="{% url 'profile' user.username %}">
             <button>Profile</button>
+            </a>
+            <br>
+            <a href="logout">
+            <button>Log Out</button>
             </a>
             <br>
             <a href="my_stories">
             <button>My Stories</button>
             </a>
+            {% else %}
+            <a href="login">
+            <button>Log In</button>
+            </a>
+            <br>
+            <a href="register">
+            <button>Sign Up</button>
+            </a>
+            {% endif %}
         </div>
     </section>
     <hr>
