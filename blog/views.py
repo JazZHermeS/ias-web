@@ -85,19 +85,19 @@ def register_request(request):
 def home(request):
 	request.user
 	story_list = story.objects.all()
-	template = loader.get_template("main_page.html")
+	template = loader.get_template("blog/main_page.html")
 	return render(request, "blog/main_page.html", {'story_list':story_list})
 
 
 @login_required (login_url="/login/")
 def new_story(request):
 	request.user
-	template = loader.get_template("new_story.html")
+	template = loader.get_template("blog/new_story.html")
 	return HttpResponse(template.render())
 
 
 @login_required (login_url="/login/")
 def my_stories(request):
-	template = loader.get_template("my_stories.html")
+	template = loader.get_template("blog/my_stories.html")
 	return HttpResponse(template.render())
 
