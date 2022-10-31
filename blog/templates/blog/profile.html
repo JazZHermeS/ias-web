@@ -7,25 +7,19 @@
     <legend class="border-bottom mb-4">Profile Information:</legend>
     <br>
 
-    Hi {{user.username}}.
+    {{user.username}}
     <br>
-    Your current email is: {{user.email}}
+    Email: {{user.email}}
+    {% if user.username == current_user.username %}
     <br>
-    Feel free to change it by completing the following form:
-    <br> <br>
-    <form method='POST' enctype="multipart/form-data">
-	    {%csrf_token%}
-	    {{form}}
-    <br>
-    <button type='submit'>Update</button>
-    <br>
-    <a href="/password_change">Change password?</a>
-    
-    <br><br><br>
-    <a href="/">
-    	<button>Back</button>
+    <a href="/settings">
+        <button>Edit</button>
     </a>
+    {% endif %}
 
-    </form>
+    <br>
+    <a href="/">
+        <button>Back</button>
+    </a>
 </div>
 {% endblock content %}

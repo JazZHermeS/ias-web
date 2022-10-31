@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
-from .forms import NewUserForm, UserUpdateForm
+from .forms import NewUserForm, UserUpdateForm, UserLoginForm
 #from .models import ToDoList, Item
 from .models import story
 from django.views.decorators.csrf import csrf_exempt
@@ -12,9 +12,15 @@ from django.contrib.auth import authenticate, login, logout, get_user_model, upd
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
+import pyotp
 
 @login_required (login_url="/login/")
-def profile(request, username):
+def profile(request, userstring):
+	uid = User.objects.get(username=userstring) # TODO read permissions
+	return render(request, "blog/profile.html",{"user": uid, "current_user": request.user})
+
+@login_required (login_url="/login/")
+def settings(request):
 	if request.method == "POST":
 		form = UserUpdateForm(request.POST, instance=request.user)
 		if form.is_valid():
@@ -25,7 +31,7 @@ def profile(request, username):
 	else:
 		form = UserUpdateForm()
 		messages.error(request, "Profile NOT updated. Invalid information.")
-	return render(request, "blog/profile.html",{"form": form, "user":request.user})
+	return render(request, "blog/settings.html",{"form": form, "user": request.user})
 
 def log_in(request):
 	if request.method == "POST":
@@ -39,7 +45,9 @@ def log_in(request):
 			messages.success(request, ("There was an error loging in, try again"))
 			return redirect('/login')
 	else:
-		return render(request, 'register/login.html', {})
+		form = UserLoginForm()
+		qr = pyotp.totp.TOTP('JBSWY3DPEHPK3PXP').provisioning_uri(name='alice@google.com', issuer_name='Secure App')
+		return render(request, 'registration/login.html', {"form": form, "qr": qr})
 
 
 @login_required (login_url="/login/")
@@ -79,7 +87,7 @@ def register_request(request):
 	else:
 		form = NewUserForm()
 		messages.error(request, "Unsuccessful registration. Invalid information.")
-	return render(request, "register/register.html",{"form": form})
+	return render(request, "registration/register.html",{"form": form})
 
 
 def home(request):
