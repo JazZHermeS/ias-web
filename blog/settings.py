@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'blog.apps.BlogConfig',
-    'sslserver'
+    'sslserver',
+    'qr_code'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

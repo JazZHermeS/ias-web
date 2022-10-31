@@ -4,7 +4,7 @@ from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm, UserUpdateForm, UserLoginForm
 #from .models import ToDoList, Item
-from .models import story
+from .models import story, OTPmaster
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.contrib import messages
@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 import pyotp
+from django.conf import settings
 
 @login_required (login_url="/login/")
 def profile(request, userstring):
@@ -27,11 +28,28 @@ def settings(request):
 			form.save()
 			messages.success(request, "Profile successfully updated." )
 			#return render(request, "blog/main_page.html", {})
-			return redirect("/")
+			#return redirect("/")
 	else:
 		form = UserUpdateForm()
 		messages.error(request, "Profile NOT updated. Invalid information.")
-	return render(request, "blog/settings.html",{"form": form, "user": request.user})
+
+	try:
+		master = OTPmaster.objects.get(user=request.user)
+		qr = pyotp.totp.TOTP(master.value).provisioning_uri(name=request.user.email, issuer_name='Story Time')
+	except OTPmaster.DoesNotExist:
+		qr = None
+
+	return render(request, "blog/settings.html",{"form": form, "user": request.user, "qr": qr})
+
+@login_required (login_url="/login/")
+def update_otp(request):
+	if request.method == "POST":
+		if request.POST["enable"] == "1":
+			code = pyotp.random_base32()
+			OTPmaster.objects.create(value=code,user=request.user)
+		else:
+			OTPmaster.objects.get(user=request.user).delete()
+	return redirect("/settings")
 
 def log_in(request):
 	if request.method == "POST":
@@ -46,8 +64,7 @@ def log_in(request):
 			return redirect('/login')
 	else:
 		form = UserLoginForm()
-		qr = pyotp.totp.TOTP('JBSWY3DPEHPK3PXP').provisioning_uri(name='alice@google.com', issuer_name='Secure App')
-		return render(request, 'registration/login.html', {"form": form, "qr": qr})
+		return render(request, 'registration/login.html', {"form": form})
 
 
 @login_required (login_url="/login/")

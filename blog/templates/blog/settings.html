@@ -1,6 +1,8 @@
 {% extends './base.html' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Settings{% endblock %}
+
+{% load qr_code %}
 
 {% block content %}
 <div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh;">
@@ -20,12 +22,24 @@
         <button type='submit'>Update</button>
         <br>
         <a href="/password_change">Change password?</a>
-
-        <br><br><br>
-        <a href="/">
-            <button>Back</button>
-        </a>
-
     </form>
+    <a href="/profile/{{user.username}}">
+        <button>Back</button>
+    </a>
+    <br><br><br>
+    {% if qr != None %}
+    {% qr_from_text qr size="S" image_format="png" error_correction="L" %}
+    <form method='POST' enctype="multipart/form-data" action="/update_otp">
+        {%csrf_token%}
+        <input type="hidden" name="enable" value="0">
+        <button type="submit">Disable 2FA</button>
+    </form>
+    {% else %}
+    <form method='POST' enctype="multipart/form-data" action="/update_otp">
+        {%csrf_token%}
+        <input type="hidden" name="enable" value="1">
+        <button type="submit">Enable 2FA</button>
+    </form>
+    {% endif %}
 </div>
 {% endblock content %}
