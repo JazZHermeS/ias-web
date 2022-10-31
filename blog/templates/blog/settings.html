@@ -23,12 +23,8 @@
         <br>
         <a href="/password_change">Change password?</a>
     </form>
-    <a href="/profile/{{user.username}}">
-        <button>Back</button>
-    </a>
-    <br><br><br>
     {% if qr != None %}
-    {% qr_from_text qr size="S" image_format="png" error_correction="L" %}
+    {% qr_from_text qr size="T" image_format="png" error_correction="L" %}
     <form method='POST' enctype="multipart/form-data" action="/update_otp">
         {%csrf_token%}
         <input type="hidden" name="enable" value="0">
@@ -41,5 +37,9 @@
         <button type="submit">Enable 2FA</button>
     </form>
     {% endif %}
+    <br>
+    <a href="/profile/{{user.username}}">
+        <button>Back</button>
+    </a>
 </div>
 {% endblock content %}

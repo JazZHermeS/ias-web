@@ -56,11 +56,22 @@ def log_in(request):
 		username=request.POST["username"]
 		password=request.POST["password"]
 		user=authenticate(request, username=username, password=password)
-		if user is not None:
+		
+		if user != None:
+			try:
+				master = OTPmaster.objects.get(user=user)
+				totp = pyotp.totp.TOTP(master.value)
+			except OTPmaster.DoesNotExist:
+				totp = None
+			
+			if (totp != None) and not(totp.verify(request.POST.get("otp","").replace(" ",""))):
+				messages.error(request, ("OTP validation failed, try again"))
+				return redirect('/login')
+				
 			login(request, user)
 			return redirect('/')
 		else:
-			messages.success(request, ("There was an error loging in, try again"))
+			messages.error(request, ("There was an error loging in, try again"))
 			return redirect('/login')
 	else:
 		form = UserLoginForm()

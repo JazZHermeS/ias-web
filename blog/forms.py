@@ -23,6 +23,9 @@ class UserUpdateForm(forms.ModelForm):
 		fields=['email']
 
 class UserLoginForm(forms.ModelForm):
+	otp = forms.CharField(required=False)
+	password = forms.CharField(widget=forms.PasswordInput)
+
 	class Meta:
 		model = User
 		fields = ["username", "password"]
