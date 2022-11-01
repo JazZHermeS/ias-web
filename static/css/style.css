@@ -1,0 +1,26 @@
+.header h1 {
+    font-size: 70px;
+    font-weight: 600;
+    background-image: linear-gradient(to left, #3c9a4a, #155804);
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    position: relative;
+  }
+
+.header {
+    display: flex;
+    justify-content:space-evenly    ;
+  }
+
+.header img  {
+    display: flex;
+    width: 100px;
+    height: 100px;
+  }
+  
+  /* .header h1 {
+    position: relative;
+    top: 18px;
+    left: 10px;
+  } */
