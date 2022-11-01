@@ -29,3 +29,15 @@ class UserLoginForm(forms.ModelForm):
 	class Meta:
 		model = User
 		fields = ["username", "password"]
+
+class NewStoryForm(forms.Form):
+	title = forms.CharField(label="title", max_length=100)
+	text = forms.CharField(label="text", max_length=1000)
+
+	def save(self, commit=True):
+		story = super(NewStoryForm, self).save(commit=False)
+		story.title = self.cleaned_data['title']
+		story.text = self.cleaned_data['text']
+		if commit:
+			story.save()
+		return story

@@ -2,8 +2,9 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
-from .forms import NewUserForm, UserUpdateForm, UserLoginForm
+from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm
 #from .models import ToDoList, Item
+from .models import story
 from .models import story, OTPmaster
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
@@ -14,6 +15,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 import pyotp
 from django.conf import settings
+from django.db import models
 
 @login_required (login_url="/login/")
 def profile(request, userstring):
@@ -121,19 +123,25 @@ def register_request(request):
 def home(request):
 	request.user
 	story_list = story.objects.all()
-	template = loader.get_template("blog/main_page.html")
-	return render(request, "blog/main_page.html", {'story_list':story_list})
+	template = loader.get_template("blog/home.html")
+	return render(request, "blog/home.html", {'story_list':story_list})
 
 
 @login_required (login_url="/login/")
 def new_story(request):
-	request.user
-	template = loader.get_template("blog/new_story.html")
-	return HttpResponse(template.render())
+	if request.method == "POST":
+		title = request.POST['title']
+		text = request.POST['text']
+		new_story = story.objects.create(title=title, text=text)
+		messages.success(request, "Publication successful." )
+		return redirect("/")
+
+	return render(request, "blog/new_story.html")
 
 
 @login_required (login_url="/login/")
 def my_stories(request):
-	template = loader.get_template("blog/my_stories.html")
-	return HttpResponse(template.render())
+	# my_stories_list = story.objects.all().filter(user=request.user)
+	my_stories_list = story.objects.all()
+	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list})
 
