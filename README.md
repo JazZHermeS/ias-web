@@ -7,6 +7,8 @@
 ```
 pip install django-crispy-forms
 pip install django-sslserver
+pip install django-qr-code
+pip install pyotp
 ```
 
 ### HTTPS setup
