@@ -4,17 +4,16 @@ from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm
 #from .models import ToDoList, Item
-from .models import story
-from .models import story, OTPmaster
+from .models import Story
+from .models import Story, OTPmaster
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import PasswordChangeForm
 import pyotp
-from django.conf import settings
+from .models import User
 from django.db import models
 
 @login_required (login_url="/login/")
@@ -122,7 +121,7 @@ def register_request(request):
 
 def home(request):
 	request.user
-	story_list = story.objects.all()
+	story_list = Story.objects.all()
 	template = loader.get_template("blog/home.html")
 	return render(request, "blog/home.html", {'story_list':story_list})
 
@@ -132,7 +131,7 @@ def new_story(request):
 	if request.method == "POST":
 		title = request.POST['title']
 		text = request.POST['text']
-		new_story = story.objects.create(title=title, text=text)
+		new_story = Story.objects.create(title=title, text=text)
 		messages.success(request, "Publication successful." )
 		return redirect("/")
 
@@ -141,7 +140,7 @@ def new_story(request):
 
 @login_required (login_url="/login/")
 def my_stories(request):
-	# my_stories_list = story.objects.all().filter(user=request.user)
-	my_stories_list = story.objects.all()
+	# my_stories_list = Story.objects.all().filter(user=request.user)
+	my_stories_list = Story.objects.all()
 	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list})
 

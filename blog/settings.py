@@ -138,4 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # django-cryptography secret key.
 # https://django-cryptography.readthedocs.io/en/latest/settings.html
 
-SECRET_KEY = ''
+SECRET_KEY = '1234'
+
+# Replace default user model with a custom one.
+
+AUTH_USER_MODEL = 'blog.User'
