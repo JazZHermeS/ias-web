@@ -4,7 +4,6 @@ from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm
 #from .models import ToDoList, Item
-from .models import Story
 from .models import Story, OTPmaster
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
@@ -132,6 +131,7 @@ def new_story(request):
 		title = request.POST['title']
 		text = request.POST['text']
 		new_story = Story.objects.create(title=title, text=text)
+		new_story.user.add(request.user)
 		messages.success(request, "Publication successful." )
 		return redirect("/")
 
@@ -140,7 +140,7 @@ def new_story(request):
 
 @login_required (login_url="/login/")
 def my_stories(request):
-	# my_stories_list = Story.objects.all().filter(user=request.user)
-	my_stories_list = Story.objects.all()
+	my_stories_list = Story.objects.all().filter(user=request.user)
+	#my_stories_list = Story.objects.all()
 	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list})
 
