@@ -23,6 +23,15 @@ http://www.templatemo.com/tm-488-classic
           <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
           <![endif]-->
 </head>
+<!-- ERROR MESSAGES DISPLAYED IN EVERY WEBPAGE THAT EXTENDS THIS FILE -->
+{% for message in messages %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+	    <div class="alert alert-danger">{{message}}</div>    
+    {% endif %}
+    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+	    <div class="alert alert-success">{{message}}</div>    
+    {% endif %}
+{% endfor %}
 <body>
   <main>
     <div class="container">	  	
