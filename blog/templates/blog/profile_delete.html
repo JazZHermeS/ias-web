@@ -1,0 +1,24 @@
+{% extends './base.html' %}
+
+{% block title %}Delete account{% endblock %}
+
+
+{% block content %}
+    <div class="content-section">
+        <h2>Delete account</h2><hr>
+        <p>Do you want to delete your profile?</p>
+        <form method="POST">
+            {% csrf_token %}
+            {{ form }}
+            <button class="btn btn-outline-info" type="submit">Delete account</button>
+        </form>
+    </div>
+
+    
+    <br><br><br>
+    {% if user.is_authenticated %}
+    <a href="{% url 'profile' user.username %}">
+    	<button>Back</button>
+    </a>
+    {% endif %}
+{% endblock %}

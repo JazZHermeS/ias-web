@@ -23,6 +23,8 @@
         <br>
         <a href="/password_change">Change password?</a>
     </form>
+    <a href="/profile_delete">Do you want to delete the account?</a>
+
     {% if qr != None %}
     {% qr_from_text qr size="T" image_format="png" error_correction="L" %}
     <form method='POST' enctype="multipart/form-data" action="/update_otp">
