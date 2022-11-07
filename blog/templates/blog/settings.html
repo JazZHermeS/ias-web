@@ -6,9 +6,46 @@
 
 {% block content %}
 <div class="content-section col-lg-12 col-md-12 col-sm-12 tutorial-style" style="min-height:65vh;">
-    <legend class="border-bottom mb-4">Settings:</legend>
+    <h2 class="tm-gold-text tm-title">Settings</h2>
     <br>
+    Hi <b>{{user.username}}</b>.
+    <br>
+    Your current email is: <b>{{user.email}}</b>
+    <br>
+    Feel free to change it by completing the following form:
+    <br> <br>
+    <form method='POST' enctype="multipart/form-data">
+	{%csrf_token%}
+	{{form}}
+	<br>
+	<button class="btn btn-outline-info" type='submit'>Update</button>
+	<br>
+	<a href="/password_change">Change password?</a>
+    </form>
+    {% if qr != None %}
+    {% qr_from_text qr size="T" image_format="png" error_correction="L" %}
+    <form method='POST' enctype="multipart/form-data" action="/update_otp">
+	{%csrf_token%}
+	<input type="hidden" name="enable" value="0">
+	<button class="tm-btn" type="submit">Disable 2FA</button>
+    </form>
+    {% else %}
+    <br>
+    <form method='POST' enctype="multipart/form-data" action="/update_otp">
+	{%csrf_token%}
+	<input type="hidden" name="enable" value="1">
+	<button class="tm-btn" type="submit">Enable 2FA</button>
+    </form>
+    {% endif %}
+    <br>
+    <a href="/profile/{{user.username}}">
+	<button class="tm-btn">Back</button>
+    </a>
 
+
+
+
+    <!-- <legend class="border-bottom mb-4">Settings:</legend> 
     Hi {{user.username}}.
     <br>
     Your current email is: {{user.email}}
@@ -41,6 +78,7 @@
     <br>
     <a href="/profile/{{user.username}}">
         <button>Back</button>
-    </a>
+    </a>    -->
+   
 </div>
 {% endblock content %}

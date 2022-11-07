@@ -4,6 +4,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}      
+	<h2 class="tm-gold-text tm-title">Sign Up</h2>
 
 	<form method="POST" class="form-group">
 		{% csrf_token %}
@@ -15,6 +16,6 @@
 
 	<br><br><br>
 	<a href="/">
-		<button>Back</button>
+		<button class="tm-btn">Back</button>
 	</a>
 {% endblock %}

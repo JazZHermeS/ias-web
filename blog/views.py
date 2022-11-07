@@ -29,9 +29,12 @@ def settings(request):
 			messages.success(request, "Profile successfully updated." )
 			#return render(request, "blog/main_page.html", {})
 			#return redirect("/")
+		else:
+			messages.error(request, "Error: Invalid fields." )
+			return redirect("/settings")
 	else:
 		form = UserUpdateForm()
-		messages.error(request, "Profile NOT updated. Invalid information.")
+		# messages.error(request, "Profile NOT updated. Invalid information.")
 
 	try:
 		master = OTPmaster.objects.get(user=request.user)
@@ -49,6 +52,7 @@ def update_otp(request):
 			OTPmaster.objects.create(value=code,user=request.user)
 		else:
 			OTPmaster.objects.get(user=request.user).delete()
+	messages.success(request, "Your OTP preferences have been updated." )
 	return redirect("/settings")
 
 def log_in(request):
@@ -65,13 +69,14 @@ def log_in(request):
 				totp = None
 			
 			if (totp != None) and not(totp.verify(request.POST.get("otp","").replace(" ",""))):
-				messages.error(request, ("OTP validation failed, try again"))
+				messages.error(request, ("Error: OTP validation failed, try again"))
 				return redirect('/login')
 				
 			login(request, user)
+			messages.success(request, "Successfully logged in." )
 			return redirect('/')
 		else:
-			messages.error(request, ("There was an error loging in, try again"))
+			messages.error(request, ("Error: There was an error loging in, try again"))
 			return redirect('/login')
 	else:
 		form = UserLoginForm()
@@ -82,6 +87,12 @@ def log_in(request):
 def password_change(request):
 	user = request.user
 	if request.method == "POST":
+		old_password = request.POST['old_password'].strip()
+		new_password = request.POST['new_password1'].strip()
+		if old_password == new_password:
+			messages.error(request, ("Error: The new password is the same as the old password."))
+			return redirect('/password_change')
+		
 		form = PasswordChangeForm(user, request.POST)
 		if form.is_valid():
 			user_form = form.save()
@@ -89,6 +100,9 @@ def password_change(request):
 			messages.success(request, "Your password has been changed." )
 			#return render(request, "blog/main_page.html", {})
 			return redirect('/')
+		else:
+			messages.error(request, ("Error: The form is not valid"))
+			return redirect('/password_change')
 	else:
 		form = PasswordChangeForm(user)
 		return render(request, 'blog/new_password.html', {'form': form})
@@ -97,7 +111,8 @@ def password_change(request):
 @login_required (login_url="/login/")
 def log_out(request):
 	logout(request)
-	return redirect('home')
+	messages.success(request, "Successfully logged out." )
+	return redirect('/')
 
 
 def register_request(request):
@@ -112,10 +127,12 @@ def register_request(request):
 			messages.success(request, "Registration successful." )
 			#return render(request, "blog/main_page.html", {})
 			return redirect("/")
+		else:
+			messages.error(request, "Error: Invalid fields." )
+			return redirect("/register")
 	else:
 		form = NewUserForm()
-		messages.error(request, "Unsuccessful registration. Invalid information.")
-	return render(request, "registration/register.html",{"form": form})
+		return render(request, "registration/register.html",{"form": form})
 
 
 def home(request):

@@ -4,7 +4,7 @@
 
 {% load crispy_forms_tags %}
 {% block content %}
-<h2>Log In</h2>
+<h2 class="tm-gold-text tm-title">Log In</h2>
 <form method="post"class="from-group">
   {% csrf_token %}
   {{form|crispy}}
@@ -14,7 +14,7 @@
 
 <br><br><br>
 <a href="/">
-	<button>Back</button>
+	<button class="tm-btn">Back</button>
 </a>
 
 {% endblock %}
