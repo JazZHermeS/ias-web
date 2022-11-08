@@ -21,6 +21,7 @@
 	<button class="btn btn-outline-info" type='submit'>Update</button>
 	<br>
 	<a href="/password_change">Change password?</a>
+    <a href="/profile_delete">Do you want to delete the account?</a>
     </form>
     {% if qr != None %}
     {% qr_from_text qr size="T" image_format="png" error_correction="L" %}
@@ -40,47 +41,6 @@
     <br>
     <a href="/profile/{{user.username}}">
 	<button class="tm-btn">Back</button>
-    </a>
-
-
-
-
-    <!-- <legend class="border-bottom mb-4">Settings:</legend> 
-    Hi {{user.username}}.
-    <br>
-    Your current email is: {{user.email}}
-    <br>
-    Feel free to change it by completing the following form:
-    <br> <br>
-    <form method='POST' enctype="multipart/form-data">
-        {%csrf_token%}
-        {{form}}
-        <br>
-        <button type='submit'>Update</button>
-        <br>
-        <a href="/password_change">Change password?</a>
-    </form>
-    <a href="/profile_delete">Do you want to delete the account?</a>
-
-    {% if qr != None %}
-    {% qr_from_text qr size="T" image_format="png" error_correction="L" %}
-    <form method='POST' enctype="multipart/form-data" action="/update_otp">
-        {%csrf_token%}
-        <input type="hidden" name="enable" value="0">
-        <button type="submit">Disable 2FA</button>
-    </form>
-    {% else %}
-    <br>
-    <form method='POST' enctype="multipart/form-data" action="/update_otp">
-        {%csrf_token%}
-        <input type="hidden" name="enable" value="1">
-        <button type="submit">Enable 2FA</button>
-    </form>
-    {% endif %}
-    <br>
-    <a href="/profile/{{user.username}}">
-        <button>Back</button>
-    </a>    -->
-   
+    </a>   
 </div>
 {% endblock content %}
