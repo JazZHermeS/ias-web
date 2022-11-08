@@ -109,18 +109,15 @@ def password_change(request):
 
 @login_required (login_url="/login/") ## TODO
 def profile_delete(request):
-	user = request.user
-	if request.method == "POST":
-		form = PasswordChangeForm(user, request.POST)
-		if form.is_valid():
-			user_form = form.save()
-			update_session_auth_hash(request, user_form)
-			messages.success(request, "Your password has been changed." )
-			#return render(request, "blog/main_page.html", {})
-			return redirect('/')
-	else:
-		form = PasswordChangeForm(user)
-		return render(request, 'blog/new_password.html', {'form': form})
+	try: 
+		user = request.user
+		user.delete()
+		messages.success(request, "Your account has been deleted." )
+		#return render(request, "blog/main_page.html", {})
+		return redirect('/')
+
+	except Exception as e:
+		return render(request, '/',{'err':e.message})
 
 @login_required (login_url="/login/")
 def log_out(request):
