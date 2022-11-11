@@ -6,6 +6,9 @@ class User(AbstractUser):
 	last_login = encrypt(models.DateField(null=True))
 	is_superuser = encrypt(models.BooleanField(default=False))
 	email = encrypt(models.CharField('',max_length=254))
+	
+	hashed_email = models.CharField('',max_length=256)
+	
 	is_staff = encrypt(models.BooleanField(default=False))
 	#is_active = encrypt(models.BooleanField(default=False))
 	date_joined = encrypt(models.DateField(null=True))

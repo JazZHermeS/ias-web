@@ -4,7 +4,7 @@ from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm
 #from .models import ToDoList, Item
-from .models import Story, OTPmaster
+from .models import Story, OTPmaster, User
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render
 from django.contrib import messages
@@ -14,6 +14,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 import pyotp
 from .models import User
 from django.db import models
+import hashlib
+from .settings import HASH_SALT
 
 @login_required (login_url="/login/")
 def profile(request, userstring):
@@ -128,6 +130,16 @@ def log_out(request):
 
 def register_request(request):
 	if request.method == "POST":
+		email = request.POST['email'].strip()
+		
+		m = hashlib.sha256()
+		m.update((HASH_SALT+email).encode('utf-8')) # The hash of the email is stored with a salt
+		hashed_email = m.hexdigest()
+
+		if User.objects.filter(hashed_email=hashed_email).exists():
+			messages.error(request, "Error: Your email belongs to another user!" )
+			return redirect("/register")
+		
 		form = NewUserForm(request.POST)
 		if form.is_valid():
 			form.save()
