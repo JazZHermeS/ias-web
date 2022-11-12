@@ -1,0 +1,189 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+{% block title %}My Stories{% endblock %}
+
+{% block content %}
+<body>
+    
+    <div class="tm-header">
+        <div class="container-fluid">
+            <div class="tm-header-inner">
+                <a href="#" class="navbar-brand tm-site-name">GDPR</a>
+                
+                <!-- navbar -->
+                <nav class="navbar tm-main-nav">
+
+                    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar">
+                        &#9776;
+                    </button>
+                    
+                    <div class="collapse navbar-toggleable-sm" id="tmNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a href="{% url 'profile' user.username %}" class="nav-link">Profile</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="my_stories" class="nav-link">My Stories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="logout" class="nav-link">Log Out</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a href="login" class="nav-link">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="register" class="nav-link">Sign Up</a>
+                            </li>
+                            {% endif %}
+                        </ul>                        
+                    </div>
+                    
+                </nav>  
+
+            </div>                                  
+        </div>            
+    </div>
+
+    <section class="tm-section">
+        <div class="container-fluid">
+            <div class="row">
+		<h2 class="tm-gold-text tm-title">What is the GDPR?</h2>
+		<p>The EU general data protection regulation (GDPR) governs how the personal data of individuals in the EU may be 
+		processed and transferred. The GDPR defines:</p>
+		<ul>
+			<li>Individuals’ fundamental rights in the digital age.</li>
+			<li>The obligations of those processing data.</li>
+			<li>Methods for ensuring compliance.</li>
+			<li>Sanctions for those in breach of the rules.</li>
+		</ul>
+		
+		<h2 class="tm-gold-text tm-title">Rights of individuals</h2>
+		<p align="justify">The GDPR lists the rights of the data subject, meaning the rights of the individuals whose personal 
+		data is being processed. These strengthened rights give individuals more control over their personal data, 
+		including through:</p>
+		<ul>
+			<li>The need for an individual's clear consent to the processing of his or her personal data.</li>
+			<li>Easier access for the data subject to his or her personal data.</li>
+			<li>The right to rectification, to erasure and ‘to be forgotten’.</li>
+			<li>The right to object, including to the use of personal data for the purposes of ‘profiling’.</li>
+			<li>The right to data portability from one service provider to another.</li>
+		</ul>
+		
+		<p align="justify"> The data must be protected by design and by default. The main principles are:</p>
+		<ol>
+		  <li align="justify">Lawfulness, fairness and transparency — Processing must be lawful, fair, and transparent to the 
+		  data subject.</li>
+		  <li align="justify">Purpose limitation — You must process data for the legitimate purposes specified explicitly to 
+		  the data subject when you collected it.</li>
+		  <li align="justify">Data minimization — You should collect and process only as much data as absolutely necessary for 
+		  the purposes specified.</li>
+		  <li align="justify">Accuracy — You must keep personal data accurate and up to date.</li>
+		  <li align="justify">Storage limitation — You may only store personally identifying data for as long as necessary for 
+		  the specified purpose.</li>
+		  <li align="justify">Integrity and confidentiality — Processing must be done in such a way as to ensure 
+		  appropriate security, integrity, and confidentiality (e.g. by using encryption).</li>
+		  <li align="justify">Accountability — The data controller is responsible for being able to demonstrate GDPR 
+		  compliance with all of these principles.</li>
+		</ol> 
+    </section>
+    
+    <footer class="tm-footer">
+        <div class="container-fluid">
+            <div class="row">
+                
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    
+                    <div class="tm-footer-content-box">
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Proin eu posuere felis</h3>
+                        <div class="tm-gray-bg">
+                            <p>Classic is free HTML CSS website template provided by TemplateMo for everyone. Feel free to use it.</p>
+                            <p>Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p>
+                            <p><strong>Danny Egg (Executive)</strong></p>    
+                        </div>    
+                    </div>
+                                            
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    <div class="tm-footer-content-box tm-footer-links-container">
+                    
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Nulla tortor dolor</h3>
+                        <nav>
+                            <ul class="nav">
+                                <li><a href="#" class="tm-footer-link">Tincidunt non faucibus</a></li>
+                                <li><a href="#" class="tm-footer-link">Vestibulum tempor</a></li>
+                                <li><a href="#" class="tm-footer-link">Fusce non turpis euismod</a></li>
+                                <li><a href="#" class="tm-footer-link">Lorem ipsum dolor sit</a></li>
+                                <li><a href="#" class="tm-footer-link">Nam in augue consectetur</a></li>
+                                <li><a href="#" class="tm-footer-link">Text Link Color #CCCC66</a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    
+                </div>
+
+                <!-- Add the extra clearfix for only the required viewport 
+                    http://stackoverflow.com/questions/24590222/bootstrap-3-grid-with-different-height-in-each-item-is-it-solvable-using-only
+                -->
+                <div class="clearfix hidden-lg-up"></div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                    <div class="tm-footer-content-box">
+                    
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Etiam mollis ornare</h3>
+                        <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p><hr class="tm-margin-b-30">
+                        <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p><hr class="tm-margin-b-30">
+                        <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p>
+                        <a href="#" class="tm-btn tm-btn-gray text-uppercase">Read More</a>
+
+                    </div>
+                    
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                    <div class="tm-footer-content-box">
+                    
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Fusce non turpis</h3>
+                        <div class="tm-margin-b-30">
+                            <img src={% static 'images/tm-img-100x100-1.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-2.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-3.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-4.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-5.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-6.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                        </div>
+                        <p class="tm-margin-b-20">Curabitur dui massa, aliquam quis mi sed, tempor vulputate tellus. Sed vestibulum non neque.</p>
+                        <a href="#" class="tm-btn tm-btn-gray text-uppercase">Browse</a>
+
+                    </div>
+                    
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 tm-copyright-col">
+                    <p class="tm-copyright-text">Copyright 2016 Your Company Name</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- load JS files -->
+    <script type="javascript" src={% static 'js/jquery-1.11.3.min.js' %}></script>             <!-- jQuery (https://jquery.com/download/) -->
+    <script type="javascript" src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> <!-- Tether for Bootstrap, http://stackoverflow.com/questions/34567939/how-to-fix-the-error-error-bootstrap-tooltips-require-tether-http-github-h --> 
+    <script type="javascript" src={% static 'js/bootstrap.min.js' %}></script>                 <!-- Bootstrap (http://v4-alpha.getbootstrap.com/) -->
+    
+</body>
+{% endblock %}

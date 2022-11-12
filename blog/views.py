@@ -165,6 +165,11 @@ def home(request):
 	return render(request, "blog/home.html", {'story_list':story_list})
 
 
+def GDPR(request):
+	template = loader.get_template("blog/GDPR.html")
+	return render(request, "blog/GDPR.html", {})
+
+
 @login_required (login_url="/login/")
 def new_story(request):
 	if request.method == "POST":

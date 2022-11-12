@@ -13,6 +13,7 @@ urlpatterns = [
 	path("new_story", views.new_story, name="new_story"),
 	path("profile/<str:userstring>", views.profile, name="profile"),
 	path("settings", views.settings, name="settings"),
+	path("GDPR", views.GDPR, name="GDPR"),
 	path("update_otp", views.update_otp, name="update_otp"),
 	path("password_change", views.password_change, name="password_change"),
 	path("profile_delete", views.profile_delete, name="profile_delete"),
