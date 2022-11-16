@@ -12,7 +12,7 @@
     <div class="tm-header">
         <div class="container-fluid">
             <div class="tm-header-inner">
-                <a href="#" class="navbar-brand tm-site-name">Story Time</a>
+                <a href="/" class="navbar-brand tm-site-name">Story Time</a>
                 
                 <!-- navbar -->
                 <nav class="navbar tm-main-nav">
@@ -58,15 +58,23 @@
                         <p class="tm-form-description">Some text I dont care.</p> 
 
 
-                        <form action="new_story" method="POST" class="tm-contact-form">       
-                            {% csrf_token %}              
-                            <div class="form-group">
+                        <form action="new_story" method="POST" class="tm-contact-form" enctype="multipart/form-data">       
+                            {% csrf_token %}    
+                            <div class="form-group"> 
+                            {{form.as_p}}         
+                            </div>
+                            {% comment %} <div class="form-group">
                                 <input type="text" id="title" name="title" class="form-control" placeholder="Title"  required/>
                             </div>
                             <div class="form-group">
                                 <textarea type="text" id="text" name="text" class="form-control" rows="10" placeholder="Your story..." required></textarea>
                             </div>
-                        
+                            
+                            <div class="form-group">
+                                <label for="img">Select an image to improve your story!</label>
+                                <input type="file" id="img" name="img" accept="image/*">
+                            </div> {% endcomment %}
+                             
                             <button type="submit" class="tm-btn">Submit</button>                          
                         </form>   
                     </section>

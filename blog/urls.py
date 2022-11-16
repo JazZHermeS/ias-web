@@ -3,6 +3,10 @@ from . import views
 from django.contrib import admin
 from django.views.generic import RedirectView
 
+from django.urls.conf import include  
+from django.conf import settings  
+from django.conf.urls.static import static  
+
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path("", views.home, name="home"),
@@ -17,4 +21,4 @@ urlpatterns = [
 	path("update_otp", views.update_otp, name="update_otp"),
 	path("password_change", views.password_change, name="password_change"),
 	path("profile_delete", views.profile_delete, name="profile_delete"),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

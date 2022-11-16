@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import login, authenticate, get_user_model
 from django.contrib.auth.forms import UserCreationForm, SetPasswordForm
-from .models import User
+from .models import User, Story
 from .settings import HASH_SALT
 import hashlib
 
@@ -41,11 +41,25 @@ class UserLoginForm(forms.ModelForm):
 class NewStoryForm(forms.Form):
 	title = forms.CharField(label="title", max_length=100)
 	text = forms.CharField(label="text", max_length=1000)
+	img = forms.ImageField(label="img")
 
 	def save(self, commit=True):
 		story = super(NewStoryForm, self).save(commit=False)
 		story.title = self.cleaned_data['title']
 		story.text = self.cleaned_data['text']
+		story.img = self.cleaned_data['img']
 		if commit:
 			story.save()
 		return story
+
+class StoryUploadForm(forms.ModelForm):
+	class Meta:
+		model = Story
+		fields = ['title', 'text', 'img']
+
+	title = forms.CharField(max_length=100, required=True, widget=forms.TextInput, label="Title:")
+	text = forms.CharField(max_length=1000, required=True, widget=forms.Textarea, label="Write your story here!")
+	img = forms.ImageField(required=False, label="You can post a picture if you want!", widget=forms.FileInput)
+		
+
+

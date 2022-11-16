@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
-from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm
+from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm, StoryUploadForm
 #from .models import ToDoList, Item
 from .models import Story, OTPmaster, User
 from django.views.decorators.csrf import csrf_exempt
@@ -15,7 +15,7 @@ import pyotp
 from .models import User
 from django.db import models
 import hashlib
-from .settings import HASH_SALT
+from .settings import HASH_SALT, MEDIA_ROOT
 
 @login_required (login_url="/login/")
 def profile(request, userstring):
@@ -62,18 +62,18 @@ def log_in(request):
 		username=request.POST["username"]
 		password=request.POST["password"]
 		user=authenticate(request, username=username, password=password)
-		
+
 		if user != None:
 			try:
 				master = OTPmaster.objects.get(user=user)
 				totp = pyotp.totp.TOTP(master.value)
 			except OTPmaster.DoesNotExist:
 				totp = None
-			
+
 			if (totp != None) and not(totp.verify(request.POST.get("otp","").replace(" ",""))):
 				messages.error(request, ("Error: OTP validation failed, try again"))
 				return redirect('/login')
-				
+
 			login(request, user)
 			messages.success(request, "Successfully logged in." )
 			return redirect('/')
@@ -94,7 +94,7 @@ def password_change(request):
 		if old_password == new_password:
 			messages.error(request, ("Error: The new password is the same as the old password."))
 			return redirect('/password_change')
-		
+
 		form = PasswordChangeForm(user, request.POST)
 		if form.is_valid():
 			user_form = form.save()
@@ -111,7 +111,7 @@ def password_change(request):
 
 @login_required (login_url="/login/") ## TODO
 def profile_delete(request):
-	try: 
+	try:
 		user = request.user
 		user.delete()
 		messages.success(request, "Your account has been deleted." )
@@ -131,7 +131,7 @@ def log_out(request):
 def register_request(request):
 	if request.method == "POST":
 		email = request.POST['email'].strip()
-		
+
 		m = hashlib.sha256()
 		m.update((HASH_SALT+email).encode('utf-8')) # The hash of the email is stored with a salt
 		hashed_email = m.hexdigest()
@@ -139,7 +139,7 @@ def register_request(request):
 		if User.objects.filter(hashed_email=hashed_email).exists():
 			messages.error(request, "Error: Your email belongs to another user!" )
 			return redirect("/register")
-		
+
 		form = NewUserForm(request.POST)
 		if form.is_valid():
 			form.save()
@@ -165,27 +165,44 @@ def home(request):
 	return render(request, "blog/home.html", {'story_list':story_list})
 
 
+
 def GDPR(request):
 	template = loader.get_template("blog/GDPR.html")
 	return render(request, "blog/GDPR.html", {})
 
-
 @login_required (login_url="/login/")
 def new_story(request):
 	if request.method == "POST":
-		title = request.POST['title']
-		text = request.POST['text']
-		new_story = Story.objects.create(title=title, text=text)
-		new_story.user.add(request.user)
-		messages.success(request, "Publication successful." )
-		return redirect("/")
+		form = StoryUploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			new_story = form.save(commit=False)
+			new_story.user = request.user
+			new_story.save()
+			return redirect("/")
 
-	return render(request, "blog/new_story.html")
+	else:
+		form = StoryUploadForm()
+
+	return render(request, "blog/new_story.html", {'form':form})
+
+# new
+def uploadView(request):
+    if request.method == 'POST':
+        form = ImageUploadForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('index')
+    else:
+            form = ImageUploadForm()
+    return render(request, 'upload.html', {'form': form})
 
 
 @login_required (login_url="/login/")
 def my_stories(request):
 	my_stories_list = Story.objects.all().filter(user=request.user)
-	#my_stories_list = Story.objects.all()
-	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list})
+	if my_stories_list.count() == 0:
+		has_story = False
+	else:
+		has_story = True
+	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list, 'has_story':has_story})
 

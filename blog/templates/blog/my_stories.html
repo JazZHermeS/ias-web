@@ -10,7 +10,7 @@
     <div class="tm-header">
         <div class="container-fluid">
             <div class="tm-header-inner">
-                <a href="#" class="navbar-brand tm-site-name">Story Time</a>
+                <a href="/" class="navbar-brand tm-site-name">Story Time</a>
                 
                 <!-- navbar -->
                 <nav class="navbar tm-main-nav">
@@ -59,7 +59,11 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">
+                    {%if has_story%}
                     <h2 class="tm-gold-text tm-title">These are your stories!</h2>
+                    {% else %}
+                    <h2 class="tm-gold-text tm-title">You still have no stories, you can add one now!</h2>
+                    {% endif %}
                     {% comment %} <p class="tm-subtitle">Some fancy explanation of the website</p> {% endcomment %}
                     <a href="/new_story" class="tm-btn text-uppercase">Add Story</a> 
                 </div>
@@ -69,7 +73,9 @@
                 {% for story in my_stories_list %}
 		        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
 		            <div class="tm-content-box">
-                        {% comment %} Add images to stories! <img src={% static 'images/tm-img-310x180-1.jpg' %} alt="Image" class="tm-margin-b-20 img-fluid"> {% endcomment %}
+                        {% if story.img %}
+                        <img src="{{story.img.url}}" alt="Image" class="tm-margin-b-20 img-fluid">
+                        {% endif %}
 		                <h2>{{story}}</h2>
 		                <h4 class="tm-margin-b-20 tm-gold-text">{{story}}</h4>
                         <p class="tm-margin-b-20"> 

@@ -145,3 +145,8 @@ SECRET_KEY = '1234'
 # Replace default user model with a custom one.
 
 AUTH_USER_MODEL = 'blog.User'
+
+
+MEDIA_URL='/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
