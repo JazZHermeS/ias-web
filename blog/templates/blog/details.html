@@ -1,0 +1,177 @@
+{% extends './base.html' %}
+
+{% load static %}
+
+{% block title %}Story Details{% endblock %}
+
+{% block content %}
+<body>
+    
+    <div class="tm-header">
+        <div class="container-fluid">
+            <div class="tm-header-inner">
+                <a href="/" class="navbar-brand tm-site-name">Story Time</a>
+                
+                <!-- navbar -->
+                <nav class="navbar tm-main-nav">
+
+                    <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#tmNavbar">
+                        &#9776;
+                    </button>
+                    
+                    <div class="collapse navbar-toggleable-sm" id="tmNavbar">
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="/" class="nav-link">Home</a>
+                            </li>
+                            {% if user.is_authenticated %}
+                            <li class="nav-item">
+                                <a href="{% url 'profile' user.username %}" class="nav-link">Profile</a>
+                            </li>
+                            <li class="nav-item active">
+                                <a href="my_stories" class="nav-link">My Stories</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="logout" class="nav-link">Log Out</a>
+                            </li>
+                            {% else %}
+                            <li class="nav-item">
+                                <a href="login" class="nav-link">Log In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="register" class="nav-link">Sign Up</a>
+                            </li>
+                            {% endif %}
+                        </ul>                        
+                    </div>
+                    
+                </nav>  
+
+            </div>                                  
+        </div>            
+    </div>
+
+    {% comment %} <div class="tm-home-img-container">
+        <img src={% static 'images/tm-home-img.jpg' %} alt="Image" class="hidden-lg-up img-fluid">
+    </div> {% endcomment %}
+
+    <section class="tm-section">
+        <div class="container-fluid">
+            {% comment %} <div class="row"> {% endcomment %}
+                {% comment %} <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center"> {% endcomment %}
+                    {% comment %} {%if has_story%} {% endcomment %}
+                    {% comment %} <h2 class="tm-gold-text tm-title">These is your story!</h2> {% endcomment %}
+                    {% comment %} {% else %} {% endcomment %}
+                    {% comment %} <h2 class="tm-gold-text tm-title">You still have no stories, you can add one now!</h2> {% endcomment %}
+                    {% comment %} {% endif %} {% endcomment %}
+                    {% comment %} <p class="tm-subtitle">Some fancy explanation of the website</p> {% endcomment %}
+                    {% comment %} <a href="/new_story" class="tm-btn text-uppercase">Add Story</a>  {% endcomment %}
+                {% comment %} </div> {% endcomment %}
+            {% comment %} </div> {% endcomment %}
+            <div class="row">
+                
+		        <div class="class=col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">
+                        {% if story.img %}
+                        <img src='{{story.img.url}}' alt="connect" class="tm-margin-b-20 img-fluid">
+		                {% endif %}
+                        <h2 class="tm-gold-text tm-title">{{story.title}}</h2> 
+		        	<p class="tm-subtitle">{{story.text}} </p>
+		        </div>
+        	
+        	    <br>
+        </div>
+    </section>
+    
+    <footer class="tm-footer">
+        <div class="container-fluid">
+            <div class="row">
+                
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    
+                    <div class="tm-footer-content-box">
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Proin eu posuere felis</h3>
+                        <div class="tm-gray-bg">
+                            <p>Classic is free HTML CSS website template provided by TemplateMo for everyone. Feel free to use it.</p>
+                            <p>Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p>
+                            <p><strong>Danny Egg (Executive)</strong></p>    
+                        </div>    
+                    </div>
+                                            
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+                    <div class="tm-footer-content-box tm-footer-links-container">
+                    
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Nulla tortor dolor</h3>
+                        <nav>
+                            <ul class="nav">
+                                <li><a href="#" class="tm-footer-link">Tincidunt non faucibus</a></li>
+                                <li><a href="#" class="tm-footer-link">Vestibulum tempor</a></li>
+                                <li><a href="#" class="tm-footer-link">Fusce non turpis euismod</a></li>
+                                <li><a href="#" class="tm-footer-link">Lorem ipsum dolor sit</a></li>
+                                <li><a href="#" class="tm-footer-link">Nam in augue consectetur</a></li>
+                                <li><a href="#" class="tm-footer-link">Text Link Color #CCCC66</a></li>
+                            </ul>
+                        </nav>
+
+                    </div>
+                    
+                </div>
+
+                <!-- Add the extra clearfix for only the required viewport 
+                    http://stackoverflow.com/questions/24590222/bootstrap-3-grid-with-different-height-in-each-item-is-it-solvable-using-only
+                -->
+                <div class="clearfix hidden-lg-up"></div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                    <div class="tm-footer-content-box">
+                    
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Etiam mollis ornare</h3>
+                        <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p><hr class="tm-margin-b-30">
+                        <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p><hr class="tm-margin-b-30">
+                        <p class="tm-margin-b-30">Aenean cursus tellus mauris, quis consequat mauris dapibus id. Donec scelerisque porttitor pharetra.</p>
+                        <a href="#" class="tm-btn tm-btn-gray text-uppercase">Read More</a>
+
+                    </div>
+                    
+                </div>
+
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+
+                    <div class="tm-footer-content-box">
+                    
+                        <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Fusce non turpis</h3>
+                        <div class="tm-margin-b-30">
+                            <img src={% static 'images/tm-img-100x100-1.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-2.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-3.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-4.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-5.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                            <img src={% static 'images/tm-img-100x100-6.jpg' %} alt="Image" class="tm-footer-thumbnail">
+                        </div>
+                        <p class="tm-margin-b-20">Curabitur dui massa, aliquam quis mi sed, tempor vulputate tellus. Sed vestibulum non neque.</p>
+                        <a href="#" class="tm-btn tm-btn-gray text-uppercase">Browse</a>
+
+                    </div>
+                    
+                </div>
+
+
+            </div>
+
+            <div class="row">
+                <div class="col-xs-12 tm-copyright-col">
+                    <p class="tm-copyright-text">Copyright 2016 Your Company Name</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- load JS files -->
+    <script type="javascript" src={% static 'js/jquery-1.11.3.min.js' %}></script>             <!-- jQuery (https://jquery.com/download/) -->
+    <script type="javascript" src="https://www.atlasestateagents.co.uk/javascript/tether.min.js"></script> <!-- Tether for Bootstrap, http://stackoverflow.com/questions/34567939/how-to-fix-the-error-error-bootstrap-tooltips-require-tether-http-github-h --> 
+    <script type="javascript" src={% static 'js/bootstrap.min.js' %}></script>                 <!-- Bootstrap (http://v4-alpha.getbootstrap.com/) -->
+    
+</body>
+{% endblock %}
