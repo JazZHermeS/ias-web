@@ -6,6 +6,7 @@ from django.views.generic import RedirectView
 from django.urls.conf import include  
 from django.conf import settings  
 from django.conf.urls.static import static  
+from django.conf.urls import url
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
@@ -21,4 +22,5 @@ urlpatterns = [
 	path("update_otp", views.update_otp, name="update_otp"),
 	path("password_change", views.password_change, name="password_change"),
 	path("profile_delete", views.profile_delete, name="profile_delete"),
+	url(r'^story_details/', views.story_details, name="story_details"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

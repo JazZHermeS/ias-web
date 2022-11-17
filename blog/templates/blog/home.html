@@ -74,11 +74,12 @@ div{
         <div class="container-fluid">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">
-                    <h2 class="tm-gold-text tm-title">Introduction</h2>
-                    <p class="tm-subtitle">Some fancy explanation of the website</p>
-                    <a href="/new_story" class="tm-btn text-uppercase">Add Story</a>
+                    <h1 class="tm-gold-text tm-title">Welcome! Take a look at our wonderful Stories!</h1>
                 </div>
             </div>
+            <hr>
+            <br>
+            <br>
             <div class="row">
                 
                 {% for story in story_list %}
@@ -87,16 +88,22 @@ div{
                         {% if story.img %}
                         <img src='{{story.img.url}}' alt="connect" class="tm-margin-b-20 img-fluid">
 		                {% endif %}
-                        <h2 class="tm-margin-b-20 tm-gold-text">{{story}}</h2> 
+                        <h3 class="tm-margin-b-20 tm-gold-text">{{story.title}}</h3> 
 		        	<div class="ellipsis"> {{story.text}} </div>
 		        <p> </p>
-                        <a href="#" class="tm-btn text-uppercase">Detail</a>
+                        <a href="story_details/?st={{story.id}}" class="tm-btn tm-btn-gray text-uppercase">Detail</a>
 		            </div>
 		        </div>
         	
         	    <br>
 		
 	            {% endfor %}
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">    
+            <a href="/new_story" class="tm-btn text-uppercase">| Write your story |</a>
         </div>
     </section>
     

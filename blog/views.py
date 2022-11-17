@@ -206,3 +206,9 @@ def my_stories(request):
 		has_story = True
 	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list, 'has_story':has_story})
 
+@login_required(login_url="/login/")
+def story_details(request):
+	story_id = request.GET.get('st')
+	story = Story.objects.get(pk=story_id)
+
+	return render(request, "blog/details.html", {"story":story})

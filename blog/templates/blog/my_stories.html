@@ -61,11 +61,15 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">
                     {%if has_story%}
                     <h2 class="tm-gold-text tm-title">These are your stories!</h2>
+                    <br>
+                    <hr>
+                    <br>
+                    <br>
                     {% else %}
                     <h2 class="tm-gold-text tm-title">You still have no stories, you can add one now!</h2>
+                    <a href="/new_story" class="tm-btn text-uppercase">Add a Story</a> 
                     {% endif %}
                     {% comment %} <p class="tm-subtitle">Some fancy explanation of the website</p> {% endcomment %}
-                    <a href="/new_story" class="tm-btn text-uppercase">Add Story</a> 
                 </div>
             </div>
             <div class="row">
@@ -74,14 +78,12 @@
 		        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
 		            <div class="tm-content-box">
                         {% if story.img %}
-                        <img src="{{story.img.url}}" alt="Image" class="tm-margin-b-20 img-fluid">
-                        {% endif %}
-		                <h2>{{story}}</h2>
-		                <h4 class="tm-margin-b-20 tm-gold-text">{{story}}</h4>
-                        <p class="tm-margin-b-20"> 
-		                {{story.text}}
-		                </p>
-                        <a href="#" class="tm-btn text-uppercase">Detail</a>
+                        <img src='{{story.img.url}}' alt="connect" class="tm-margin-b-20 img-fluid">
+		                {% endif %}
+                        <h3 class="tm-margin-b-20 tm-gold-text">{{story.title}}</h3> 
+		        	{% comment %} <div class="ellipsis"> {{story.text}} </div> {% endcomment %}
+		        <p> </p>
+                    <a href="story_details/?st={{story.id}}" class="tm-btn tm-btn-gray text-uppercase">Edit</a>    
 		            </div>
 		        </div>
         	
@@ -114,7 +116,7 @@
                         <h3 class="tm-gold-text tm-title tm-footer-content-box-title">Nulla tortor dolor</h3>
                         <nav>
                             <ul class="nav">
-                                <li><a href="#" class="tm-footer-link">Tincidunt non faucibus</a></li>
+                                <li><a href="{% url 'GDPR' %}" class="tm-footer-link">GDPR</a></li>
                                 <li><a href="#" class="tm-footer-link">Vestibulum tempor</a></li>
                                 <li><a href="#" class="tm-footer-link">Fusce non turpis euismod</a></li>
                                 <li><a href="#" class="tm-footer-link">Lorem ipsum dolor sit</a></li>
@@ -183,4 +185,4 @@
     <script type="javascript" src={% static 'js/bootstrap.min.js' %}></script>                 <!-- Bootstrap (http://v4-alpha.getbootstrap.com/) -->
     
 </body>
-{% endblock %}
+{% endblock content %}
