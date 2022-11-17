@@ -8,7 +8,7 @@ class User(AbstractUser):
 	is_superuser = encrypt(models.BooleanField(default=False))
 	email = encrypt(models.CharField('',max_length=254))
 	
-	hashed_email = models.CharField('',max_length=256, default=None)
+	hashed_email = models.CharField('',max_length=256, default=None, null=True)
 	
 	is_staff = encrypt(models.BooleanField(default=False))
 	#is_active = encrypt(models.BooleanField(default=False))

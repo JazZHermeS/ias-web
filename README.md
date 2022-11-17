@@ -10,6 +10,7 @@ pip install django-sslserver
 pip install django-qr-code
 pip install pyotp
 pip install django-cryptography
+python -m pip install Pillow
 ```
 
 ### HTTPS setup
