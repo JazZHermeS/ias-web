@@ -109,13 +109,18 @@ def password_change(request):
 		form = PasswordChangeForm(user)
 		return render(request, 'blog/new_password.html', {'form': form})
 
-@login_required (login_url="/login/") ## TODO
+@login_required (login_url="/login/")
 def profile_delete(request):
+	request.user	
+	template = loader.get_template("blog/profile_delete.html")
+	return render(request, "blog/profile_delete.html", {})
+
+@login_required (login_url="/login/") ## TODO
+def profile_final_delete(request):
 	try:
 		user = request.user
 		user.delete()
 		messages.success(request, "Your account has been deleted." )
-		#return render(request, "blog/main_page.html", {})
 		return redirect('/')
 
 	except Exception as e:

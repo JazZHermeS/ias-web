@@ -2,23 +2,23 @@
 
 {% block title %}Delete account{% endblock %}
 
+{% load qr_code %}
 
 {% block content %}
     <div class="content-section">
         <h2>Delete account</h2><hr>
         <p>Do you want to delete your profile?</p>
-        <form method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <button class="btn btn-outline-info" type="submit">Delete account</button>
-        </form>
+        <a href="/profile_final_delete" style="color: white;">
+        <button class="btn btn-outline-info" type="submit" style="background-color:darkred;">Delete account</button>
+        </a>
     </div>
 
     
     <br><br><br>
     {% if user.is_authenticated %}
-    <a href="{% url 'profile' user.username %}">
-    	<button>Back</button>
-    </a>
+    <br>
+    <a href="/settings">
+    <button class="tm-btn">Back</button>
+    </a> 
     {% endif %}
 {% endblock %}
