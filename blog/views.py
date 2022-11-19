@@ -3,20 +3,19 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
 from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm, StoryUploadForm
-#from .models import ToDoList, Item
 from .models import Story, OTPmaster, User
 from django.views.decorators.csrf import csrf_exempt
-from django.shortcuts import render
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.messages import get_messages
 import pyotp
-from .models import User
 from django.db import models
 import hashlib
 from .settings import HASH_SALT, MEDIA_ROOT
+import datetime
+
 
 
 @login_required (login_url="/login/")
@@ -26,7 +25,8 @@ def profile(request, userstring):
 
 
 def lockout(request, credentials, *args, **kwargs):
-	messages.error(request, ("Too many login attempts, wait some minutes before trying again in 5 minutes!"))
+	current_datetime = datetime.datetime.now().strftime('%H:%M:%S')
+	messages.error(request, ("Too many login attempts, wait 5 minutes before trying again"))
 	return redirect('/login')
 
 
@@ -161,7 +161,6 @@ def register_request(request):
 			user = authenticate(username=username, password=password)
 			login(request, user)
 			messages.success(request, "Registration successful." )
-			#return render(request, "blog/main_page.html", {})
 			return redirect("/")
 		else:
 			messages.error(request, "Error: Invalid fields." )
