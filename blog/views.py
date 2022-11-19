@@ -11,16 +11,24 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout, get_user_model, update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.messages import get_messages
 import pyotp
 from .models import User
 from django.db import models
 import hashlib
 from .settings import HASH_SALT, MEDIA_ROOT
 
+
 @login_required (login_url="/login/")
 def profile(request, userstring):
 	uid = User.objects.get(username=userstring) # TODO read permissions
 	return render(request, "blog/profile.html",{"user": uid, "current_user": request.user})
+
+
+def lockout(request, credentials, *args, **kwargs):
+	messages.error(request, ("Too many login attempts, wait some minutes before trying again in 5 minutes!"))
+	return redirect('/login')
+
 
 @login_required (login_url="/login/")
 def settings(request):
@@ -78,7 +86,7 @@ def log_in(request):
 			messages.success(request, "Successfully logged in." )
 			return redirect('/')
 		else:
-			messages.error(request, ("Error: There was an error loging in, try again"))
+			messages.error(request, ("Error: There was an error loging in"))
 			return redirect('/login')
 	else:
 		form = UserLoginForm()

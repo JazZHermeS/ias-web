@@ -30,6 +30,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+AXES_LOCKOUT_CALLABLE = "blog.views.lockout"
+AXES_FAILURE_LIMIT = 6
+AXES_COOLOFF_TIME = 0.083
+AXES_RESET_ON_SUCCESS = True
+
 
 # Application definition
 
@@ -43,10 +48,17 @@ INSTALLED_APPS = [
     'crispy_forms',
     'blog.apps.BlogConfig',
     'sslserver',
-    'qr_code'
+    'qr_code',
+    'axes' # Axes
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+AUTHENTICATION_BACKENDS = [
+   'axes.backends.AxesBackend', # Axes must be first
+   'django.contrib.auth.backends.ModelBackend',
+]
 
 
 MIDDLEWARE = [
@@ -57,6 +69,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'axes.middleware.AxesMiddleware',
 ]
 
 ROOT_URLCONF = 'blog.urls'
@@ -145,7 +158,6 @@ SECRET_KEY = '1234'
 # Replace default user model with a custom one.
 
 AUTH_USER_MODEL = 'blog.User'
-
 
 MEDIA_URL='/media/'
 

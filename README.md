@@ -11,6 +11,7 @@ pip install django-qr-code
 pip install pyotp
 pip install django-cryptography
 python -m pip install Pillow
+pip install django-axes
 ```
 
 ### HTTPS setup
@@ -32,4 +33,10 @@ Replace the value of the `SECRET_KEY` setting inside `settings.py` with the appr
 ## Run
 ```
 python manage.py runsslserver --certificate cert.pem --key key.pem
+```
+
+## Reset login attempts
+```
+python manage.py axes_reset
+python manage.py axes_reset_username [username ...]
 ```
