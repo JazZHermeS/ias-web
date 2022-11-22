@@ -29,7 +29,7 @@
                                 <a href="{% url 'profile' user.username %}" class="nav-link">Profile</a>
                             </li>
                             <li class="nav-item active">
-                                <a href="my_stories" class="nav-link">My Stories</a>
+                                <a href="/my_stories" class="nav-link">My Stories</a>
                             </li>
                             <li class="nav-item">
                                 <a href="logout" class="nav-link">Log Out</a>
@@ -57,22 +57,10 @@
 
     <section class="tm-section">
         <div class="container-fluid">
-            {% comment %} <div class="row"> {% endcomment %}
-                {% comment %} <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center"> {% endcomment %}
-                    {% comment %} {%if has_story%} {% endcomment %}
-                    {% comment %} <h2 class="tm-gold-text tm-title">These is your story!</h2> {% endcomment %}
-                    {% comment %} {% else %} {% endcomment %}
-                    {% comment %} <h2 class="tm-gold-text tm-title">You still have no stories, you can add one now!</h2> {% endcomment %}
-                    {% comment %} {% endif %} {% endcomment %}
-                    {% comment %} <p class="tm-subtitle">Some fancy explanation of the website</p> {% endcomment %}
-                    {% comment %} <a href="/new_story" class="tm-btn text-uppercase">Add Story</a>  {% endcomment %}
-                {% comment %} </div> {% endcomment %}
-            {% comment %} </div> {% endcomment %}
             <div class="row">
-                
 		        <div class="class=col-xs-12 col-sm-12 col-md-12 col-lg-12 text-xs-center">
                         {% if story.img %}
-                        <img src='{{story.img.url}}' alt="connect" class="tm-margin-b-20 img-fluid">
+                        <img src='{{story.img.url}}' alt="connect" class="tm-margin-b-20 img-fluid" style="width: 100%; height: auto;">
 		                {% endif %}
                         <h2 class="tm-gold-text tm-title">{{story.title}}</h2> 
 		        	<p class="tm-subtitle">{{story.text}} </p>

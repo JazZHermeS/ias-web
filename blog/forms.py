@@ -38,27 +38,13 @@ class UserLoginForm(forms.ModelForm):
 		model = User
 		fields = ["username", "password"]
 
-class NewStoryForm(forms.Form):
-	title = forms.CharField(label="title", max_length=100)
-	text = forms.CharField(label="text", max_length=1000)
-	img = forms.ImageField(label="img")
-
-	def save(self, commit=True):
-		story = super(NewStoryForm, self).save(commit=False)
-		story.title = self.cleaned_data['title']
-		story.text = self.cleaned_data['text']
-		story.img = self.cleaned_data['img']
-		if commit:
-			story.save()
-		return story
-
 class StoryUploadForm(forms.ModelForm):
 	class Meta:
 		model = Story
 		fields = ['title', 'text', 'img']
 
 	title = forms.CharField(max_length=100, required=True, widget=forms.TextInput, label="Title:")
-	text = forms.CharField(max_length=1000, required=True, widget=forms.Textarea, label="Write your story here!")
+	text = forms.CharField(max_length=5000, required=True, widget=forms.Textarea, label="Write your story here!")
 	img = forms.ImageField(required=False, label="You can post a picture if you want!", widget=forms.FileInput)
 		
 

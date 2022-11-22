@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.views.generic import RedirectView
-from .forms import NewUserForm, UserUpdateForm, UserLoginForm, NewStoryForm, StoryUploadForm
+from .forms import NewUserForm, UserUpdateForm, UserLoginForm, StoryUploadForm
 from .models import Story, OTPmaster, User
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
@@ -158,7 +158,7 @@ def register_request(request):
 			form.save()
 			username = form.cleaned_data['username']
 			password = form.cleaned_data['password1']
-			user = authenticate(username=username, password=password)
+			user = authenticate(request, username=username, password=password)
 			login(request, user)
 			messages.success(request, "Registration successful." )
 			return redirect("/")
