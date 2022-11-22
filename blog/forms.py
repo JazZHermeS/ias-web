@@ -45,7 +45,7 @@ class StoryUploadForm(forms.ModelForm):
 
 	title = forms.CharField(max_length=100, required=True, widget=forms.TextInput, label="Title:")
 	text = forms.CharField(max_length=5000, required=True, widget=forms.Textarea, label="Write your story here!")
-	img = forms.ImageField(required=False, label="You can post a picture if you want!", widget=forms.FileInput)
+	img = forms.ImageField(required=False, label="You can post a picture if you want!", widget=forms.FileInput, initial=None)
 		
 
 

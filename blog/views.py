@@ -222,3 +222,39 @@ def story_details(request):
 	story = Story.objects.get(pk=story_id)
 
 	return render(request, "blog/details.html", {"story":story})
+
+@login_required (login_url="/login/")
+def edit_story(request):
+	story_id = request.GET.get('st')
+	story = Story.objects.get(pk=story_id)
+
+	if request.method == "POST":
+		form = StoryUploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			edited_story = form.save(commit=False)
+
+			story.title = edited_story.title
+			story.text = edited_story.text
+
+			if edited_story.img:
+				story.img = edited_story.img
+
+			story.save()
+			return redirect("/")
+
+	else:
+		if story.img:
+			form = StoryUploadForm(initial={'title': story.title, 'text': story.text, 'img': story.img})
+			form.fields['img'].label="You can change the current image or leave the current one!"
+		else:
+			form = StoryUploadForm(initial={'title': story.title, 'text': story.text})
+
+	return render(request, "blog/edit_story.html", {'form':form, 'story': story})
+
+def delete_story(request):
+	story_id = request.GET.get('st')
+	story = Story.objects.get(pk=story_id)
+
+	story.delete()
+	
+	return redirect("/my_stories")

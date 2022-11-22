@@ -25,4 +25,6 @@ urlpatterns = [
 	path("profile_final_delete", views.profile_final_delete, name="profile_final_delete"),
 	re_path(r'^story_details/\?st=[0-9]+', views.story_details, name="story_details"),
 	re_path('story_details/', views.story_details, name="story_details"),
+	re_path('edit_story/', views.edit_story, name="edit_story"),
+	re_path('delete_story/', views.delete_story, name="delete_story"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
