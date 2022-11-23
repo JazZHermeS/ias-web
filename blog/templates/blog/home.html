@@ -84,10 +84,9 @@ div{
 	</div>
             <br>
             <br>
-            <div class="row">
-                
+            <div style="display: grid; grid-template-columns: auto auto auto auto auto auto auto auto;">
                 {% for story in story_list %}
-		        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-3 col-xl-3">
+		        <div style="width: 100%; padding: 20px;">
 		            <div class="tm-content-box">
                         {% if story.img %}
                         <img src='{{story.img.url}}' alt="connect" class="tm-margin-b-20 img-fluid">
@@ -95,7 +94,7 @@ div{
                         <h3 class="tm-margin-b-20 tm-gold-text">{{story.title}}</h3> 
 		        	<div class="ellipsis"> {{story.text}} </div>
 		        <p> </p>
-                        <a href="story_details/?st={{story.id}}" class="tm-btn tm-btn-gray text-uppercase">Read More</a>
+                        <a href="story_details/?st={{story.id}}" class="tm-btn tm-btn-gray text-uppercase" style="">Read More</a>
 		            </div>
 		        </div>
         	
