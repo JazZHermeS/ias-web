@@ -22,17 +22,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-v%hv$8lu&!2$u$cr-z^v8t+g&d@-^50y8+4uzb)kc&-7+dd=ht'
-
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 AXES_LOCKOUT_CALLABLE = "blog.views.lockout"
 AXES_FAILURE_LIMIT = 6
-AXES_COOLOFF_TIME = 0.083
+AXES_COOLOFF_TIME = 0.005 # 0.083 # Number of hours
 AXES_RESET_ON_SUCCESS = True
 
 
@@ -49,7 +46,7 @@ INSTALLED_APPS = [
     'blog.apps.BlogConfig',
     'sslserver',
     'qr_code',
-    'axes' # Axes
+    'axes'
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -152,6 +149,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # django-cryptography secret key.
 # https://django-cryptography.readthedocs.io/en/latest/settings.html
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'django-insecure-v%hv$8lu&!2$u$cr-z^v8t+g&d@-^50y8+4uzb)kc&-7+dd=ht'
 
 SECRET_KEY = '1234'
 
