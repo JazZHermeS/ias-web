@@ -31,7 +31,7 @@ class UserUpdateForm(forms.ModelForm):
 		fields=['email']
 
 class UserLoginForm(forms.ModelForm):
-	otp = forms.CharField(required=False)
+	otp = forms.CharField(required=False, label='One-time password', widget=forms.TextInput(attrs={'placeholder': 'Fill in this field if you have two-factor authentication enabled.'}))
 	password = forms.CharField(widget=forms.PasswordInput)
 
 	class Meta:

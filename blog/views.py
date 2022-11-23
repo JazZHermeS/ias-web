@@ -86,7 +86,7 @@ def log_in(request):
 			messages.success(request, "Successfully logged in." )
 			return redirect('/')
 		else:
-			messages.error(request, ("Error: There was an error loging in"))
+			messages.error(request, ("Error: There was an error logging in"))
 			return redirect('/login')
 	else:
 		form = UserLoginForm()
