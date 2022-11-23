@@ -7,6 +7,7 @@ from django.urls.conf import include, re_path
 from django.conf import settings  
 from django.conf.urls.static import static  
 #from django.conf.urls import url
+from django.views.static import serve
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
@@ -27,4 +28,6 @@ urlpatterns = [
 	re_path('story_details/', views.story_details, name="story_details"),
 	re_path('edit_story/', views.edit_story, name="edit_story"),
 	re_path('delete_story/', views.delete_story, name="delete_story"),
+	re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}), 
+	re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}), 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
