@@ -34,6 +34,10 @@ def handle404(request, exception):
 	return render(request, 'blog/404.html', status=400)
 
 
+def handle500(request, *args, **argv):
+	return render(request, 'blog/404.html', status=500)
+
+
 @login_required (login_url="/login/")
 def settings(request):
 	if request.method == "POST":
