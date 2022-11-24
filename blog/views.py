@@ -54,6 +54,7 @@ def settings(request):
 
 	return render(request, "blog/settings.html",{"form": form, "user": request.user, "qr": qr})
 
+
 @login_required (login_url="/login/")
 def update_otp(request):
 	if request.method == "POST":
@@ -64,6 +65,7 @@ def update_otp(request):
 			OTPmaster.objects.get(user=request.user).delete()
 	messages.success(request, "Your OTP preferences have been updated." )
 	return redirect("/settings")
+
 
 def log_in(request):
 	if request.method == "POST":
@@ -117,11 +119,13 @@ def password_change(request):
 		form = PasswordChangeForm(user)
 		return render(request, 'blog/new_password.html', {'form': form})
 
+
 @login_required (login_url="/login/")
 def profile_delete(request):
 	request.user	
 	template = loader.get_template("blog/profile_delete.html")
 	return render(request, "blog/profile_delete.html", {})
+
 
 @login_required (login_url="/login/") ## TODO
 def profile_final_delete(request):
@@ -133,6 +137,7 @@ def profile_final_delete(request):
 
 	except Exception as e:
 		return render(request, '/',{'err':e.message})
+
 
 @login_required (login_url="/login/")
 def log_out(request):
@@ -176,9 +181,11 @@ def home(request):
 	template = loader.get_template("blog/home.html")
 	return render(request, "blog/home.html", {'story_list':story_list})
 
+
 def GDPR(request):
 	template = loader.get_template("blog/GDPR.html")
 	return render(request, "blog/GDPR.html", {})
+
 
 @login_required (login_url="/login/")
 def new_story(request):
@@ -189,11 +196,14 @@ def new_story(request):
 			new_story.user = request.user
 			new_story.save()
 			return redirect("/")
-
+		else:
+			messages.error(request, "Error: Invalid fields." )
+			
 	else:
 		form = StoryUploadForm()
 
 	return render(request, "blog/new_story.html", {'form':form})
+
 
 # new
 def uploadView(request):
@@ -216,12 +226,14 @@ def my_stories(request):
 		has_story = True
 	return render(request, "blog/my_stories.html", {'my_stories_list':my_stories_list, 'has_story':has_story})
 
+
 @login_required(login_url="/login/")
 def story_details(request):
 	story_id = request.GET.get('st')
 	story = Story.objects.get(pk=story_id)
 
 	return render(request, "blog/details.html", {"story":story})
+
 
 @login_required (login_url="/login/")
 def edit_story(request):
@@ -241,6 +253,8 @@ def edit_story(request):
 
 			story.save()
 			return redirect("/")
+		else:
+			messages.error(request, "Error: Invalid fields." )
 
 	else:
 		if story.img:
@@ -250,6 +264,7 @@ def edit_story(request):
 			form = StoryUploadForm(initial={'title': story.title, 'text': story.text})
 
 	return render(request, "blog/edit_story.html", {'form':form, 'story': story})
+
 
 def delete_story(request):
 	story_id = request.GET.get('st')
