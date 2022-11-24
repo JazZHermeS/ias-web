@@ -30,6 +30,10 @@ def lockout(request, credentials, *args, **kwargs):
 	return redirect('/login')
 
 
+def handle404(request, exception):
+	return render(request, 'blog/404.html', status=404)
+
+
 @login_required (login_url="/login/")
 def settings(request):
 	if request.method == "POST":

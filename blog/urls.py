@@ -2,12 +2,14 @@ from django.urls import include, path
 from . import views
 from django.contrib import admin
 from django.views.generic import RedirectView
-
 from django.urls.conf import include, re_path  
 from django.conf import settings  
+from django.conf.urls import handler404
 from django.conf.urls.static import static  
 #from django.conf.urls import url
 from django.views.static import serve
+
+handler404 = views.handle404
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
