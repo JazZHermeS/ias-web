@@ -35,8 +35,9 @@ Replace the value of the `SECRET_KEY` setting inside `settings.py` with the appr
 python manage.py runsslserver --certificate cert.pem --key key.pem
 ```
 
-## Reset login attempts
+## Login attempts
 ```
+python manage.py axes_list_attempts
 python manage.py axes_reset
 python manage.py axes_reset_username [username ...]
 ```
