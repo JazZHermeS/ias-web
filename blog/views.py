@@ -20,7 +20,7 @@ import datetime
 
 @login_required (login_url="/login/")
 def profile(request, userstring):
-	uid = User.objects.get(username=userstring) # TODO read permissions
+	uid = User.objects.get(username=userstring)
 	return render(request, "blog/profile.html",{"user": uid, "current_user": request.user})
 
 
@@ -45,14 +45,11 @@ def settings(request):
 		if form.is_valid():
 			form.save()
 			messages.success(request, "Profile successfully updated." )
-			#return render(request, "blog/main_page.html", {})
-			#return redirect("/")
 		else:
 			messages.error(request, "Error: Invalid fields." )
 			return redirect("/settings")
 	else:
 		form = UserUpdateForm()
-		# messages.error(request, "Profile NOT updated. Invalid information.")
 
 	try:
 		master = OTPmaster.objects.get(user=request.user)
@@ -118,7 +115,6 @@ def password_change(request):
 			user_form = form.save()
 			update_session_auth_hash(request, user_form)
 			messages.success(request, "Your password has been changed." )
-			#return render(request, "blog/main_page.html", {})
 			return redirect('/')
 		else:
 			messages.error(request, ("Error: The form is not valid"))
@@ -135,7 +131,7 @@ def profile_delete(request):
 	return render(request, "blog/profile_delete.html", {})
 
 
-@login_required (login_url="/login/") ## TODO
+@login_required (login_url="/login/")
 def profile_final_delete(request):
 	try:
 		user = request.user

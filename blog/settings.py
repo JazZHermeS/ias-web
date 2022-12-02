@@ -29,7 +29,7 @@ ALLOWED_HOSTS = ['*']
 
 AXES_LOCKOUT_CALLABLE = "blog.views.lockout"
 AXES_FAILURE_LIMIT = 6
-AXES_COOLOFF_TIME = 0.005 # 0.083 # Number of hours
+AXES_COOLOFF_TIME = 0.083 # Number of hours
 AXES_RESET_ON_SUCCESS = True
 
 

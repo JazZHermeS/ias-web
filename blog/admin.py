@@ -6,6 +6,5 @@ from .models import User
 class storyAdmin(admin.ModelAdmin):
     list_display = ["title", "text", "img"]
 
-#admin.site.register(ToDoList)
 admin.site.register(Story, storyAdmin)
 admin.site.register(User)
